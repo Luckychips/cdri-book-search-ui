@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { totalSearchCountState } from '@/stores/recoil';
 import { SearchInput } from '@/components/molecules';
 import * as S from './styles';
 
 const Searcher = () => {
-  const [resultCount, setResultCount] = useState(0);
+  const resultCount = useRecoilValue(totalSearchCountState);
   return (
     <S.Container>
       <S.SearchTitle>도서 검색</S.SearchTitle>

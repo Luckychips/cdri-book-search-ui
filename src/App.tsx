@@ -1,17 +1,20 @@
 import React from 'react';
+import { RecoilRoot } from 'recoil';
 import { Header, MainContent } from '@/components/atoms';
-import { EmptyResult } from "@/components/molecules";
 import { Searcher } from '@/components/organisms';
+import { SearchResult } from '@/components/templates';
 
 function App() {
   return (
-    <main>
-      <Header />
-      <MainContent>
-        <Searcher />
-        <EmptyResult />
-      </MainContent>
-    </main>
+    <RecoilRoot>
+      <main>
+        <Header />
+        <MainContent>
+          <Searcher />
+          <SearchResult />
+        </MainContent>
+      </main>
+    </RecoilRoot>
   );
 }
 
