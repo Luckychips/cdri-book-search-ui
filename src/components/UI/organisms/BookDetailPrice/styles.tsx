@@ -44,7 +44,7 @@ export const PriceContainer = styled.div`
       color: #353c49;
     }
   }
-  
+
   & > .spacing {
     margin: 10px 0 30px 0;
   }

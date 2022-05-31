@@ -1,1 +1,5 @@
-export { totalSearchCountState, bookItemListState } from './DataSearchBook';
+export {
+  currentPageState,
+  totalSearchCountState,
+  bookItemListState,
+} from './DataSearchBook';

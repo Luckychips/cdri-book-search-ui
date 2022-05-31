@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import useSWR from 'swr';
 import axios from 'axios';
 import * as S from './styles';
 import { icons } from '@/assets';
 import { ResponseData } from '@/models/response';
-import { totalSearchCountState, bookItemListState } from '@/stores/recoil';
+import {
+  totalSearchCountState,
+  bookItemListState,
+  currentPageState,
+} from '@/stores/recoil';
 
 const fetcher = (url: string) =>
   axios
@@ -20,9 +24,10 @@ const fetcher = (url: string) =>
 const SearchInput = () => {
   const setResultCount = useSetRecoilState(totalSearchCountState);
   const setBookItemList = useSetRecoilState(bookItemListState);
+  const currentPage = useRecoilValue(currentPageState);
   const [shouldFetch, setShouldFetch] = useState(false);
   const [keyword, setKeyword] = useState('');
-  const url = `/book.json?query=${encodeURI(keyword)}`;
+  const url = `/book.json?query=${encodeURI(keyword)}&start=${currentPage}`;
   const { data, error } = useSWR(shouldFetch ? url : null, fetcher);
 
   useEffect(() => {
