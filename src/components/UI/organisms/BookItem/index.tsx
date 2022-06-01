@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import * as S from './styles';
 import { FlexInLiner } from '@/components/atoms';
 import { BookDetail } from '@/components/organisms';
 import { Book } from '@/models/response';
+import * as S from './styles';
+import { icons } from '@/assets';
 
 interface BookItemProps {
   item: Book;
@@ -30,7 +31,13 @@ const BookItem = ({ item }: BookItemProps) => {
           )}
           <S.PurchaseButton onClick={goToPurchase}>구매하기</S.PurchaseButton>
           <S.ViewDetailButton onClick={() => setIsOpenDetail(!isOpenDetail)}>
-            상세보기
+            <FlexInLiner>
+              <div>상세보기</div>
+              <img
+                src={isOpenDetail ? icons.ic_chevron_up : icons.ic_chevron_down}
+                alt=""
+              />
+            </FlexInLiner>
           </S.ViewDetailButton>
         </FlexInLiner>
       </S.ItemContainer>

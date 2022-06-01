@@ -58,8 +58,9 @@ export const PurchaseButton = styled.span`
 `;
 
 export const ViewDetailButton = styled.span`
+  position: relative;
   margin: 0 10px;
-  padding: 12px 28px;
+  padding: 12px 20px;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -69,5 +70,9 @@ export const ViewDetailButton = styled.span`
 
   &:hover {
     cursor: pointer;
+  }
+
+  & img {
+    margin-left: 5px;
   }
 `;

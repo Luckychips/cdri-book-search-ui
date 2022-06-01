@@ -11,3 +11,9 @@ interface CssProps {
   color?: string;
   cursor?: string;
 }
+
+interface ButtonProps {
+  buttonType?: 'primary' | 'secondary';
+  className?: string;
+  onClick: () => void;
+}

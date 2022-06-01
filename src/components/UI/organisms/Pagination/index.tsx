@@ -11,16 +11,20 @@ const Pagination = () => {
   const totalPageCount = Math.ceil(totalSearchCount / PER_PAGER);
 
   const getThisPageNumber = (index: number) => {
-      const pivot =  (Math.ceil(currentPage / PER_PAGER) - 1) * PER_PAGER;
-      return index + pivot;
+    const pivot = (Math.ceil(currentPage / PER_PAGER) - 1) * PER_PAGER;
+    return index + pivot;
   };
 
   return (
     <S.Container>
       <FlexInLiner>
-        <PagerButton isDisabled={currentPage === 1} isPageCount={false} onClick={() => setCurrentPage(1)} />
         <PagerButton
-            isDisabled={currentPage === 1}
+          isDisabled={currentPage === 1}
+          isPageCount={false}
+          onClick={() => setCurrentPage(1)}
+        />
+        <PagerButton
+          isDisabled={currentPage === 1}
           isPageCount={false}
           isFirst={false}
           onClick={() => {
@@ -29,18 +33,22 @@ const Pagination = () => {
             }
           }}
         />
-        {Array.from({ length: PER_PAGER }, (_, i) => getThisPageNumber(i + 1)).map((page) => {
-          return page <= totalPageCount && (
-            <PagerButton
-              key={`page-number-${page}`}
-              pageNumber={page}
-              isActive={currentPage === page}
-              onClick={() => setCurrentPage(page)}
-            />
+        {Array.from({ length: PER_PAGER }, (_, i) =>
+          getThisPageNumber(i + 1),
+        ).map((page) => {
+          return (
+            page <= totalPageCount && (
+              <PagerButton
+                key={`page-number-${page}`}
+                pageNumber={page}
+                isActive={currentPage === page}
+                onClick={() => setCurrentPage(page)}
+              />
+            )
           );
         })}
         <PagerButton
-            isDisabled={currentPage === totalPageCount}
+          isDisabled={currentPage === totalPageCount}
           isPageCount={false}
           isFirst={false}
           isPrevious={false}
@@ -51,7 +59,7 @@ const Pagination = () => {
           }}
         />
         <PagerButton
-            isDisabled={currentPage === totalPageCount}
+          isDisabled={currentPage === totalPageCount}
           isPageCount={false}
           isPrevious={false}
           onClick={() => setCurrentPage(totalPageCount)}

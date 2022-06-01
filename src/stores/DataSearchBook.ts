@@ -14,3 +14,13 @@ export const bookItemListState = atom({
   key: 'BookItemList',
   default: [],
 });
+
+export const detailSearchFieldListState = atom({
+  key: 'DetailSearchFieldList',
+  default: [
+    {
+      key: '제목',
+      value: '',
+    },
+  ],
+});

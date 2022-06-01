@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import useSWR from 'swr';
 import axios from 'axios';
 import * as S from './styles';
@@ -9,7 +9,10 @@ import {
   totalSearchCountState,
   bookItemListState,
   currentPageState,
+  isVisiblePopUpState,
 } from '@/stores/recoil';
+
+import { SearchPopUp } from '@/components/templates';
 
 const fetcher = (url: string) =>
   axios
@@ -25,6 +28,8 @@ const SearchInput = () => {
   const setResultCount = useSetRecoilState(totalSearchCountState);
   const setBookItemList = useSetRecoilState(bookItemListState);
   const currentPage = useRecoilValue(currentPageState);
+  const [isVisiblePopUp, setIsVisiblePopUp] =
+    useRecoilState(isVisiblePopUpState);
   const [shouldFetch, setShouldFetch] = useState(false);
   const [keyword, setKeyword] = useState('');
   const url = `/book.json?query=${encodeURI(keyword)}&start=${currentPage}`;
@@ -51,7 +56,10 @@ const SearchInput = () => {
         }}
       />
       <S.SearchIcon src={icons.ic_search} alt="" />
-      <S.SearchButton>상세검색</S.SearchButton>
+      <S.SearchButton onClick={() => setIsVisiblePopUp(true)}>
+        상세검색
+      </S.SearchButton>
+      {isVisiblePopUp && <SearchPopUp />}
     </S.Container>
   );
 };
