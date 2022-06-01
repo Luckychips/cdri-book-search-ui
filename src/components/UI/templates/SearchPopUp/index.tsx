@@ -13,6 +13,7 @@ import {
   queryKeywordState,
   queryStringState,
   detailSearchFieldListState,
+  backUpSearchFieldListState,
   isVisiblePopUpState,
 } from '@/stores/recoil';
 import * as S from './styles';
@@ -24,6 +25,9 @@ const SearchPopUp = () => {
   const setShouldFetch = useSetRecoilState(shouldFetchState);
   const setCurrentPage = useSetRecoilState(currentPageState);
   const setQueryString = useSetRecoilState(queryStringState);
+  const setBackUpSearchFieldList = useSetRecoilState(
+    backUpSearchFieldListState,
+  );
   const resetKeyword = useResetRecoilState(queryKeywordState);
   const [searchItems, setSearchItems] = useRecoilState(
     detailSearchFieldListState,
@@ -70,6 +74,7 @@ const SearchPopUp = () => {
         query += `&${item.keyParams}=${encodeURI(item.value)}`;
       }
 
+      setBackUpSearchFieldList(searchItems as []);
       setCurrentPage(1);
       setQueryString(query);
       setShouldFetch(true);
@@ -84,7 +89,11 @@ const SearchPopUp = () => {
         </S.DismissButton>
         {searchItems.map((item, index) => (
           <S.SearchField key={`search-field-${index}`}>
-            <SearchDetailLabel itemIndex={index} keyString={item.key} keyParams={item.keyParams} />
+            <SearchDetailLabel
+              itemIndex={index}
+              keyString={item.key}
+              keyParams={item.keyParams}
+            />
             <SearchDetailInput
               value={item.value}
               setValue={(text) => updateSearchFieldItem(index, text)}

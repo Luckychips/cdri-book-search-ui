@@ -13,6 +13,7 @@ import {
   bookItemListState,
   currentPageState,
   isVisiblePopUpState,
+  backUpSearchFieldListState,
 } from '@/stores/recoil';
 
 import { SearchPopUp } from '@/components/templates';
@@ -31,6 +32,7 @@ const SearchInput = () => {
   const setResultCount = useSetRecoilState(totalSearchCountState);
   const setBookItemList = useSetRecoilState(bookItemListState);
   const currentPage = useRecoilValue(currentPageState);
+  const backUpSearchFieldList = useRecoilValue(backUpSearchFieldListState);
   const [isVisiblePopUp, setIsVisiblePopUp] =
     useRecoilState(isVisiblePopUpState);
   const [queryString, setQueryString] = useRecoilState(queryStringState);
@@ -40,10 +42,41 @@ const SearchInput = () => {
   const { data, error } = useSWR(shouldFetch ? url : null, fetcher);
 
   useEffect(() => {
+    if (!shouldFetch) {
+      if (queryString.includes('book.json')) {
+        setQueryString(
+          `/book.json?query=${encodeURI(keyword)}&start=${currentPage}`,
+        );
+      }
+
+      if (queryString.includes('book_adv.json') && !!backUpSearchFieldList.length) {
+        let newQuery = `/book_adv.json?start=${currentPage}`;
+        for (let i = 0; i < backUpSearchFieldList.length; i++) {
+          const item = backUpSearchFieldList[i] as {
+            key: string;
+            keyParams: string;
+            value: string;
+          };
+          if (newQuery.includes(item.keyParams)) {
+            continue;
+          }
+
+          newQuery += `&${item.keyParams}=${encodeURI(item.value)}`;
+        }
+
+        setQueryString(newQuery);
+      }
+
+      setShouldFetch(true);
+    }
+  }, [currentPage]);
+
+  useEffect(() => {
     setShouldFetch(false);
 
     if (data) {
       const response = data as ResponseData;
+      console.log(response);
       setResultCount(response.total);
       setBookItemList(response.items as []);
     }
@@ -57,9 +90,7 @@ const SearchInput = () => {
         onChange={(e) => setKeyword(e.target.value)}
         onKeyUp={(e) => {
           if (!!keyword.length && e.key === 'Enter') {
-            setQueryString(
-              `/book.json?query=${encodeURI(keyword)}&start=${currentPage}`,
-            );
+            setQueryString(`/book.json?query=${encodeURI(keyword)}&start=1`);
             setShouldFetch(true);
           }
         }}

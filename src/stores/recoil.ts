@@ -4,5 +4,6 @@ export {
   totalSearchCountState,
   bookItemListState,
   detailSearchFieldListState,
+  backUpSearchFieldListState,
 } from './DataSearchBook';
 export { isVisiblePopUpState } from './Page';

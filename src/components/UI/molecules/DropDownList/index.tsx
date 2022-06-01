@@ -15,7 +15,11 @@ interface DropDownListProps {
   setIsVisibleList: (isVisibleList: boolean) => void;
 }
 
-const DropDownList = ({ itemIndex, keyParams, setIsVisibleList }: DropDownListProps) => {
+const DropDownList = ({
+  itemIndex,
+  keyParams,
+  setIsVisibleList,
+}: DropDownListProps) => {
   const defaultList = [
     {
       keyString: '제목',

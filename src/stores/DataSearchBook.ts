@@ -26,3 +26,8 @@ export const detailSearchFieldListState = atom({
     },
   ],
 });
+
+export const backUpSearchFieldListState = atom({
+  key: 'BackUpSearchFieldList',
+  default: [],
+});

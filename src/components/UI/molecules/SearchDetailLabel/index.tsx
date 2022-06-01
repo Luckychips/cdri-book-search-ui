@@ -14,7 +14,7 @@ const SearchDetailLabel = ({
   className = '',
   itemIndex,
   keyString,
-                             keyParams,
+  keyParams,
 }: SearchDetailLabelProps) => {
   const [isVisibleList, setIsVisibleList] = useState(false);
 
