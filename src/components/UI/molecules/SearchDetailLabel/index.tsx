@@ -7,12 +7,14 @@ interface SearchDetailLabelProps {
   className?: string;
   itemIndex: number;
   keyString: string;
+  keyParams: string;
 }
 
 const SearchDetailLabel = ({
   className = '',
   itemIndex,
   keyString,
+                             keyParams,
 }: SearchDetailLabelProps) => {
   const [isVisibleList, setIsVisibleList] = useState(false);
 
@@ -31,6 +33,7 @@ const SearchDetailLabel = ({
       {isVisibleList && (
         <DropDownList
           itemIndex={itemIndex}
+          keyParams={keyParams}
           setIsVisibleList={setIsVisibleList}
         />
       )}

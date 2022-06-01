@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import useSWR from 'swr';
 import axios from 'axios';
@@ -7,7 +7,7 @@ import { icons } from '@/assets';
 import { ResponseData } from '@/models/response';
 import {
   shouldFetchState,
-    queryKeywordState,
+  queryKeywordState,
   queryStringState,
   totalSearchCountState,
   bookItemListState,
@@ -40,7 +40,7 @@ const SearchInput = () => {
   const { data, error } = useSWR(shouldFetch ? url : null, fetcher);
 
   useEffect(() => {
-      setShouldFetch(false);
+    setShouldFetch(false);
 
     if (data) {
       const response = data as ResponseData;
@@ -57,7 +57,9 @@ const SearchInput = () => {
         onChange={(e) => setKeyword(e.target.value)}
         onKeyUp={(e) => {
           if (!!keyword.length && e.key === 'Enter') {
-            setQueryString(`/book.json?query=${encodeURI(keyword)}&start=${currentPage}`);
+            setQueryString(
+              `/book.json?query=${encodeURI(keyword)}&start=${currentPage}`,
+            );
             setShouldFetch(true);
           }
         }}

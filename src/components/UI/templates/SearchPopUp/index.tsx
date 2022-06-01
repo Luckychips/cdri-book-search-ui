@@ -1,13 +1,15 @@
 import React from 'react';
-import {useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState} from 'recoil';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import {
   FlexInLiner,
   RemoveFieldButton,
   AddFieldButton,
 } from '@/components/atoms';
 import { SearchDetailLabel, SearchDetailInput } from '@/components/molecules';
+import { PARAMS } from '@/constpack/api';
 import {
   shouldFetchState,
+  currentPageState,
   queryKeywordState,
   queryStringState,
   detailSearchFieldListState,
@@ -20,6 +22,7 @@ const SearchPopUp = () => {
   const resetFieldItems = useResetRecoilState(detailSearchFieldListState);
   const setIsVisiblePopUp = useSetRecoilState(isVisiblePopUpState);
   const setShouldFetch = useSetRecoilState(shouldFetchState);
+  const setCurrentPage = useSetRecoilState(currentPageState);
   const setQueryString = useSetRecoilState(queryStringState);
   const resetKeyword = useResetRecoilState(queryKeywordState);
   const [searchItems, setSearchItems] = useRecoilState(
@@ -35,7 +38,7 @@ const SearchPopUp = () => {
     setSearchItems(
       searchItems.concat({
         key: '제목',
-        keyParams: 'd_titl',
+        keyParams: PARAMS.TITLE,
         value: '',
       }),
     );
@@ -55,11 +58,19 @@ const SearchPopUp = () => {
 
   const search = () => {
     if (!!searchItems.length && !!searchItems[0].value) {
+      dismiss();
       resetKeyword();
-      let query = '/book_adv.xml?start=1';
-      searchItems.map((item) => {
+      let query = '/book_adv.json?start=1';
+      for (let i = 0; i < searchItems.length; i++) {
+        const item = searchItems[i];
+        if (query.includes(item.keyParams)) {
+          continue;
+        }
+
         query += `&${item.keyParams}=${encodeURI(item.value)}`;
-      });
+      }
+
+      setCurrentPage(1);
       setQueryString(query);
       setShouldFetch(true);
     }
@@ -73,7 +84,7 @@ const SearchPopUp = () => {
         </S.DismissButton>
         {searchItems.map((item, index) => (
           <S.SearchField key={`search-field-${index}`}>
-            <SearchDetailLabel itemIndex={index} keyString={item.key} />
+            <SearchDetailLabel itemIndex={index} keyString={item.key} keyParams={item.keyParams} />
             <SearchDetailInput
               value={item.value}
               setValue={(text) => updateSearchFieldItem(index, text)}
@@ -89,6 +100,7 @@ const SearchPopUp = () => {
               itemIndex={-1}
               className="visibility-hidden"
               keyString=""
+              keyParams=""
             />
             <AddFieldButton onClick={() => addSearchFieldItem()} />
           </S.SearchField>

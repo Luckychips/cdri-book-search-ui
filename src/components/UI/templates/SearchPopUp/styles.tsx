@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.main`
+  z-index: 99999;
   position: absolute;
   right: 0;
   top: 45px;

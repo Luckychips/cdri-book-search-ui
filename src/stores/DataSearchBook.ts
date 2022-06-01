@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import { PARAMS } from '@/constpack/api';
 
 export const currentPageState = atom({
   key: 'CurrentPage',
@@ -20,7 +21,7 @@ export const detailSearchFieldListState = atom({
   default: [
     {
       key: '제목',
-      keyParams: 'd_titl',
+      keyParams: PARAMS.TITLE,
       value: '',
     },
   ],

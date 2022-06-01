@@ -11,7 +11,6 @@ interface BookItemProps {
 
 const BookItem = ({ item }: BookItemProps) => {
   const [isOpenDetail, setIsOpenDetail] = useState(false);
-  console.log(item);
 
   const goToPurchase = () => {
     window.open(item.link, '_blank');
