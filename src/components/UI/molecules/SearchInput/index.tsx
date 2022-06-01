@@ -6,6 +6,9 @@ import * as S from './styles';
 import { icons } from '@/assets';
 import { ResponseData } from '@/models/response';
 import {
+  shouldFetchState,
+    queryKeywordState,
+  queryStringState,
   totalSearchCountState,
   bookItemListState,
   currentPageState,
@@ -30,12 +33,15 @@ const SearchInput = () => {
   const currentPage = useRecoilValue(currentPageState);
   const [isVisiblePopUp, setIsVisiblePopUp] =
     useRecoilState(isVisiblePopUpState);
-  const [shouldFetch, setShouldFetch] = useState(false);
-  const [keyword, setKeyword] = useState('');
-  const url = `/book.json?query=${encodeURI(keyword)}&start=${currentPage}`;
+  const [queryString, setQueryString] = useRecoilState(queryStringState);
+  const [shouldFetch, setShouldFetch] = useRecoilState(shouldFetchState);
+  const [keyword, setKeyword] = useRecoilState(queryKeywordState);
+  const url = `${queryString}`;
   const { data, error } = useSWR(shouldFetch ? url : null, fetcher);
 
   useEffect(() => {
+      setShouldFetch(false);
+
     if (data) {
       const response = data as ResponseData;
       setResultCount(response.total);
@@ -51,6 +57,7 @@ const SearchInput = () => {
         onChange={(e) => setKeyword(e.target.value)}
         onKeyUp={(e) => {
           if (!!keyword.length && e.key === 'Enter') {
+            setQueryString(`/book.json?query=${encodeURI(keyword)}&start=${currentPage}`);
             setShouldFetch(true);
           }
         }}

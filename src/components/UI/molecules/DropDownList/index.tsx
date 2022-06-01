@@ -1,39 +1,54 @@
 import React from 'react';
+import { useRecoilState } from 'recoil';
+import { detailSearchFieldListState } from '@/stores/recoil';
 import * as S from './styles';
 
-interface ItemProps {
-  key: string;
-  value: string;
-}
-
 interface DropDownListProps {
+  itemIndex: number;
   setIsVisibleList: (isVisibleList: boolean) => void;
 }
 
-const DropDownList = ({ setIsVisibleList }: DropDownListProps) => {
+const DropDownList = ({ itemIndex, setIsVisibleList }: DropDownListProps) => {
   const list = [
     {
-      value: '제목',
-      key: 'd_titl',
+      keyString: '제목',
+      params: 'd_titl',
     },
     {
-      value: '저자명',
-      key: 'd_auth',
+      keyString: '저자명',
+      params: 'd_auth',
     },
     {
-      value: '출판사',
-      key: 'd_publ',
+      keyString: '출판사',
+      params: 'd_publ',
     },
   ];
+  const [searchItems, setSearchItems] = useRecoilState(
+    detailSearchFieldListState,
+  );
+
+  const updateSearchFieldItem = (item: {
+    keyString: string;
+    params: string;
+  }) => {
+    const shallow = searchItems.slice();
+    shallow.splice(itemIndex, 1, {
+      ...searchItems[itemIndex],
+      key: item.keyString,
+      keyParams: item.params,
+    });
+    setSearchItems(shallow);
+    setIsVisibleList(false);
+  };
 
   return (
     <S.Container>
-      {list.map((item, index) => (
+      {list.map((item) => (
         <S.ListItem
-          key={`list-item-${item.key}`}
-          onClick={() => setIsVisibleList(false)}
+          key={`list-item-${item.params}`}
+          onClick={() => updateSearchFieldItem(item)}
         >
-          {item.value}
+          {item.keyString}
         </S.ListItem>
       ))}
     </S.Container>

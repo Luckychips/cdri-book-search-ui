@@ -19,7 +19,7 @@ export const Container = styled.label`
   }
 
   & div {
-    width: 25px;
+    width: 40px;
   }
 
   & img {

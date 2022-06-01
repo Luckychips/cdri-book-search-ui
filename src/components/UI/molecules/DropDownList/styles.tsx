@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 export const Container = styled.ul`
   position: absolute;
   top: 55px;
-  width: 90px;
+  width: 105px;
   background-color: #ffffff;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
   list-style: none;

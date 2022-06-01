@@ -4,6 +4,7 @@ export const Container = styled.main`
   position: absolute;
   right: 0;
   top: 45px;
+  min-width: 350px;
 `;
 
 export const PopUpContent = styled.section`

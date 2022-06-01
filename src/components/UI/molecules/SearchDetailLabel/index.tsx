@@ -5,11 +5,13 @@ import { icons } from '@/assets';
 
 interface SearchDetailLabelProps {
   className?: string;
+  itemIndex: number;
   keyString: string;
 }
 
 const SearchDetailLabel = ({
   className = '',
+  itemIndex,
   keyString,
 }: SearchDetailLabelProps) => {
   const [isVisibleList, setIsVisibleList] = useState(false);
@@ -26,7 +28,12 @@ const SearchDetailLabel = ({
           alt=""
         />
       </S.Container>
-      {isVisibleList && <DropDownList setIsVisibleList={setIsVisibleList} />}
+      {isVisibleList && (
+        <DropDownList
+          itemIndex={itemIndex}
+          setIsVisibleList={setIsVisibleList}
+        />
+      )}
     </>
   );
 };

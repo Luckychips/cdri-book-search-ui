@@ -1,3 +1,4 @@
+export { shouldFetchState, queryKeywordState, queryStringState } from './Query';
 export {
   currentPageState,
   totalSearchCountState,

@@ -20,6 +20,7 @@ export const detailSearchFieldListState = atom({
   default: [
     {
       key: '제목',
+      keyParams: 'd_titl',
       value: '',
     },
   ],
