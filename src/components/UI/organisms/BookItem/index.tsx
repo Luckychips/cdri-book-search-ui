@@ -3,7 +3,6 @@ import { FlexInLiner, ViewDetailButton } from '@/components/atoms';
 import { BookDetail } from '@/components/organisms';
 import { Book } from '@/models/response';
 import * as S from './styles';
-import { icons } from '@/assets';
 
 interface BookItemProps {
   item: Book;
