@@ -4,20 +4,10 @@ export const Container = styled.section`
   position: relative;
 `;
 
-export const ViewDetailButton = styled.div`
+export const DetailButtonContainer = styled.div`
   position: absolute;
-  right: 0;
-  padding: 12px 28px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  color: #6d7582;
-  background-color: #f2f4f6;
-  border-radius: 8px;
-
-  &:hover {
-    cursor: pointer;
-  }
+  top: -12.5px;
+  right: -40px;
 `;
 
 export const PriceContainer = styled.div`
@@ -58,11 +48,19 @@ export const PriceLabel = styled.span`
 `;
 
 export const PurchaseButton = styled.div`
+  position: absolute;
+  width: 60px;
+  text-align: center;
+  right: -30px;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   color: white;
   background-color: #4880ee;
   border-radius: 8px;
-  padding: 12px 90.5px;
+  padding: 12px 87.5px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

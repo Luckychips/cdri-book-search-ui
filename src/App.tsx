@@ -6,8 +6,8 @@ import { SearchResult } from '@/components/templates';
 
 /*
  *  todo
- *  3. 상세검색 팝업 추가
  *  4. 기타 누락된 css 및 상세보기 아코디언 애니메이션 처리
+ *  5. 검색 연동 예외처리
  * */
 
 function App() {

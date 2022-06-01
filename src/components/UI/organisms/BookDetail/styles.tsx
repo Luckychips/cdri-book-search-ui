@@ -1,5 +1,18 @@
 import styled from '@emotion/styled';
 
+export const WrappedAnimator = styled.section`
+  height: 0;
+  overflow: hidden;
+  transition: height 0.5s;
+  &.on {
+    height: 350px;
+  }
+
+  &.off {
+    height: 0;
+  }
+`;
+
 export const Container = styled.section`
   padding: 40px;
   display: flex;

@@ -49,7 +49,10 @@ const SearchInput = () => {
         );
       }
 
-      if (queryString.includes('book_adv.json') && !!backUpSearchFieldList.length) {
+      if (
+        queryString.includes('book_adv.json') &&
+        !!backUpSearchFieldList.length
+      ) {
         let newQuery = `/book_adv.json?start=${currentPage}`;
         for (let i = 0; i < backUpSearchFieldList.length; i++) {
           const item = backUpSearchFieldList[i] as {
