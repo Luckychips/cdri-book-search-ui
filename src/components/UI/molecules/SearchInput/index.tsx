@@ -13,7 +13,7 @@ import {
   bookItemListState,
   currentPageState,
   isVisiblePopUpState,
-  backUpSearchFieldListState,
+  backUpSearchFieldListState, detailSearchFieldListState,
 } from '@/stores/recoil';
 
 import { SearchPopUp } from '@/components/templates';
@@ -31,8 +31,9 @@ const fetcher = (url: string) =>
 const SearchInput = () => {
   const setResultCount = useSetRecoilState(totalSearchCountState);
   const setBookItemList = useSetRecoilState(bookItemListState);
-  const currentPage = useRecoilValue(currentPageState);
-  const backUpSearchFieldList = useRecoilValue(backUpSearchFieldListState);
+  const setSearchItems = useSetRecoilState(detailSearchFieldListState);
+  const [backUpSearchFieldList, setBackUpSearchFieldList] = useRecoilState(backUpSearchFieldListState);
+  const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
   const [isVisiblePopUp, setIsVisiblePopUp] =
     useRecoilState(isVisiblePopUpState);
   const [queryString, setQueryString] = useRecoilState(queryStringState);
@@ -43,9 +44,10 @@ const SearchInput = () => {
 
   useEffect(() => {
     if (!shouldFetch) {
+      const startIndex = currentPage + (9 * (currentPage - 1));
       if (queryString.includes('book.json')) {
         setQueryString(
-          `/book.json?query=${encodeURI(keyword)}&start=${currentPage}`,
+          `/book.json?query=${encodeURI(keyword)}&start=${startIndex}`,
         );
       }
 
@@ -53,7 +55,7 @@ const SearchInput = () => {
         queryString.includes('book_adv.json') &&
         !!backUpSearchFieldList.length
       ) {
-        let newQuery = `/book_adv.json?start=${currentPage}`;
+        let newQuery = `/book_adv.json?start=${startIndex}`;
         for (let i = 0; i < backUpSearchFieldList.length; i++) {
           const item = backUpSearchFieldList[i] as {
             key: string;
@@ -79,11 +81,24 @@ const SearchInput = () => {
 
     if (data) {
       const response = data as ResponseData;
-      console.log(response);
       setResultCount(response.total);
       setBookItemList(response.items as []);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (error) {
+      console.log(error);
+      setQueryString('');
+      setShouldFetch(false);
+      setResultCount(0);
+      setBookItemList([]);
+      setKeyword('');
+      setCurrentPage(1);
+      setBackUpSearchFieldList([]);
+      setSearchItems([]);
+    }
+  }, [error]);
 
   return (
     <S.Container>
